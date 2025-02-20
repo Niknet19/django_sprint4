@@ -9,59 +9,58 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('blog', '0002_post_image'),
+        ("blog", "0002_post_image"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Comment',
+            name="Comment",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
                 (
-                    'is_published',
+                    "is_published",
                     models.BooleanField(
                         default=True,
-                        help_text='Снимите галочку, чтобы скрыть публикацию.',
-                        verbose_name='Опубликовано',
+                        help_text="Снимите галочку, чтобы скрыть публикацию.",
+                        verbose_name="Опубликовано",
                     ),
                 ),
-                ('text', models.TextField(verbose_name='Текст')),
+                ("text", models.TextField(verbose_name="Текст")),
                 (
-                    'created_at',
-                    models.DateTimeField(
-                        auto_now_add=True, verbose_name='Добавлено'),
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Добавлено"),
                 ),
                 (
-                    'author',
+                    "author",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='comments',
+                        related_name="comments",
                         to=settings.AUTH_USER_MODEL,
-                        verbose_name='Автор',
+                        verbose_name="Автор",
                     ),
                 ),
                 (
-                    'post',
+                    "post",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='comments',
-                        to='blog.post',
-                        verbose_name='Комментарий',
+                        related_name="comments",
+                        to="blog.post",
+                        verbose_name="Комментарий",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'комментарий',
-                'verbose_name_plural': 'Комментарий',
-                'ordering': ('created_at',),
+                "verbose_name": "комментарий",
+                "verbose_name_plural": "Комментарий",
+                "ordering": ("created_at",),
             },
         ),
     ]

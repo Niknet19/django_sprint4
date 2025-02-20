@@ -5,21 +5,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 
 urlpatterns = [
-    path('', include('blog.urls')),
-    path('pages/', include('pages.urls')),
-    path('admin/', admin.site.urls),
-    path('auth/', include('django.contrib.auth.urls')),
+    path("", include("blog.urls")),
+    path("pages/", include("pages.urls")),
+    path("admin/", admin.site.urls),
+    path("auth/", include("django.contrib.auth.urls")),
     path(
-        'auth/registration/',
+        "auth/registration/",
         CreateView.as_view(
-            template_name='registration/registration_form.html',
+            template_name="registration/registration_form.html",
             form_class=UserCreationForm,
-            success_url=reverse_lazy('blog:index'),
+            success_url=reverse_lazy("blog:index"),
         ),
-        name='registration',
+        name="registration",
     ),
 ]
 
-handler403 = 'pages.views.csrf_failure'
-handler404 = 'pages.views.page_not_found'
-handler500 = 'pages.views.server_error'
+handler403 = "pages.views.csrf_failure"
+handler404 = "pages.views.page_not_found"
+handler500 = "pages.views.server_error"

@@ -1,7 +1,6 @@
-from django.db import models
-from django.contrib.auth import get_user_model
-
 from core.models import PublishedModel
+from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 
@@ -88,7 +87,8 @@ class Comment(PublishedModel):
 
     text = models.TextField(verbose_name="Текст")
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Автор", related_name="comments"
+        User,
+        on_delete=models.CASCADE, verbose_name="Автор", related_name="comments"
     )
     post = models.ForeignKey(
         Post,
@@ -96,7 +96,8 @@ class Comment(PublishedModel):
         verbose_name="Комментарий",
         related_name="comments",
     )
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Добавлено")
+    created_at = models.DateTimeField(
+        auto_now_add=True, verbose_name="Добавлено")
 
     class Meta:
         verbose_name = "комментарий"

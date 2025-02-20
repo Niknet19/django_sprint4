@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from django.core.paginator import Paginator
+from django.db.models import Count
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
 
-from .models import Post, Category, Comment, User
-from .forms import PostForm, ProfileEditForm, CommentForm
+from .forms import CommentForm, PostForm, ProfileEditForm
+from .models import Category, Comment, Post, User
 
 PAGES_NUMBER = 10
 
@@ -13,7 +13,8 @@ PAGES_NUMBER = 10
 def get_posts(post_objects):
     """Отфильтрованные посты из БД"""
     return post_objects.filter(
-        pub_date__lte=timezone.now(), is_published=True, category__is_published=True
+        pub_date__lte=timezone.now(),
+        is_published=True, category__is_published=True
     )
 
 
@@ -27,7 +28,8 @@ def annotate_posts_with_comments(post_objects):
 def index(request):
     """Главная страница"""
     template = "blog/index.html"
-    post_list = annotate_posts_with_comments(Post.objects).order_by("-pub_date")
+    post_list = annotate_posts_with_comments(
+        Post.objects).order_by("-pub_date")
     page_obj = get_paginator(request, post_list)
     context = {"page_obj": page_obj}
     return render(request, template, context)
@@ -55,8 +57,10 @@ def post_detail(request, post_id):
 def category_posts(request, category_slug):
     """Посты в категории"""
     template = "blog/category.html"
-    category = get_object_or_404(Category, slug=category_slug, is_published=True)
-    post_list = annotate_posts_with_comments(category.posts).order_by("-pub_date")
+    category = get_object_or_404(
+        Category, slug=category_slug, is_published=True)
+    post_list = annotate_posts_with_comments(
+        category.posts).order_by("-pub_date")
     page_obj = get_paginator(request, post_list)
     context = {"category": category, "page_obj": page_obj}
     return render(request, template, context)
